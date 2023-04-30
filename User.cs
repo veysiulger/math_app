@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace math_app
 {
@@ -15,7 +17,7 @@ namespace math_app
         public byte userLevel;
         public byte userAnswerCount;
 
-        public User(string name, int score, int highestScore, byte level, byte answerCount)
+    public User(string name, int score, int highestScore, byte level, byte answerCount)
         {
             this.userName = name;
             this.userScore = score;
@@ -27,9 +29,31 @@ namespace math_app
 
         public void showUserInfos()
         {
-            Console.WriteLine("\n****************************");
+
+
+            Console.WriteLine("\n******************************");
             Console.WriteLine($"Isim: {userName} \nPuan:{userScore} \nSeviye:{userLevel} \nRekor:{userHighestScore} \nCevap Hakkı:{userAnswerCount}");
-            Console.WriteLine("\n****************************");
+            Console.WriteLine("\n******************************");
+        }
+        public string registerControl()
+        {
+            string userAnswer;
+            do
+            {
+                userAnswer = Console.ReadLine();
+                if (userAnswer == " " || userAnswer == "")
+                {
+                    Console.WriteLine("Isim alani bos birakilamaz.");
+                }else if (userAnswer != " ")
+                {
+                    this.userName = userAnswer;
+
+                }
+         
+            } while (userAnswer == " " || userAnswer == "");
+
+
+            return userAnswer;
         }
     }
 }
