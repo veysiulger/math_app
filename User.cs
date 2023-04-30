@@ -24,9 +24,7 @@ namespace math_app
             this.userHighestScore = highestScore;
             this.userLevel = level;
             this.userAnswerCount = answerCount;
-
         }
-
         public void showUserInfos()
         {
 
@@ -41,19 +39,28 @@ namespace math_app
             do
             {
                 userAnswer = Console.ReadLine();
-                if (userAnswer == " " || userAnswer == "")
+                if (userAnswer =="" || userAnswer == " ")
                 {
                     Console.WriteLine("Isim alani bos birakilamaz.");
-                }else if (userAnswer != " ")
+                }else if (userAnswer !="")
                 {
                     this.userName = userAnswer;
 
                 }
          
-            } while (userAnswer == " " || userAnswer == "");
+            } while ( userAnswer =="" || userAnswer==" ");
 
 
             return userAnswer;
+        }
+        public int calcHighestScore(int userScore,int userHighestScore)
+        {
+            if (userScore > userHighestScore)
+            {
+                userHighestScore =userScore;
+            }
+
+            return userHighestScore;
         }
     }
 }

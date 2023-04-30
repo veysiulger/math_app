@@ -23,7 +23,6 @@ namespace math_app
             byte levelPoint = 5;
             byte questionIndex = 0;
 
-            bool isParsed = default;
 
             Console.WriteLine("Pratik Matematik Uygulamasi");
             Console.WriteLine("******************************");
@@ -32,10 +31,10 @@ namespace math_app
             User user = new User(name, userScore, highestScore, userlevel, answerCount);
             Level level = new Level(userlevel, levelScore, levelPoint);
 
-
             userAnswer = user.registerControl();
 
             user.showUserInfos();
+
             while (userAnswer != "exit")
             {
                 questionResult = level.createQuestion(user.userLevel, questionIndex);
@@ -56,7 +55,7 @@ namespace math_app
                         user.userLevel = 2;
                         questionIndex = 0;
                         level.pointPerQuestion = 10;
-                        Console.WriteLine($"{user.userLevel}. seviyeye ciktiniz!");
+                        Console.WriteLine($"\n{user.userLevel}. seviyeye ciktiniz!");
                         user.showUserInfos();
                     }
                     else if (user.userScore == 80)
@@ -64,7 +63,7 @@ namespace math_app
                         user.userLevel = 3;
                         questionIndex = 0;
                         level.pointPerQuestion = 20;
-                        Console.WriteLine($"{user.userLevel}. seviyeye ciktiniz!");
+                        Console.WriteLine($"\n{user.userLevel}. seviyeye ciktiniz!");
                         user.showUserInfos();
                     }
 
@@ -72,17 +71,42 @@ namespace math_app
                 }
                 else if (Convert.ToInt32(userAnswer) != questionResult)
                 {
+                    questionIndex++;
+                    user.userAnswerCount--;
+                    Console.WriteLine($"Yanlis! Kalan cevap hakkiniz:{user.userAnswerCount}");
 
-                    answerCount--;
-                    Console.WriteLine($"Yanlis! Kalan cevap hakkiniz:{answerCount}");
+                    if (user.userAnswerCount == 0)
+                    {
+                        user.userHighestScore = user.calcHighestScore(user.userScore,user.userHighestScore);
+                  
+                        Console.WriteLine($"\nTum cevap haklariniz bitti! Rekorunuz: {user.userHighestScore}");
+                        user.showUserInfos();
+                        Console.WriteLine($"\nTekrar oynamak icin enter'a basiniz. Cikmak icin exit yaziniz:");
+                        userAnswer = Console.ReadLine();
+                        if (userAnswer != "")
+                        {
+                            Console.WriteLine("Cikis yapiliyor");
+                            userAnswer = "exit";
+
+                        }
+                        else if (userAnswer == "")
+                        {
+                            user.userAnswerCount = 5;
+                            user.userScore = 0;
+                            user.userLevel = 1;
+                            questionIndex = 0;
+                            level.pointPerQuestion = 5;
+
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                    }
 
                 }
-
-
-
             }
-
-
         }
     }
 }
